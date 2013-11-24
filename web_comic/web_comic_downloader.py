@@ -1,31 +1,29 @@
-import time
 import os
-import shutil
 import urllib.request
 
-MAX_PAGE = 100
-DEFAULT_PATH = 0.1
+MAX_PAGE = 1000
 
 class WebComicDownloader:
     '''
-    Webコミックをダウンロードするスクリプト
+    Webコミックをダウンロード
     '''
 
     def __init__(self,comic_base_url,download_dir):
-        path = DEFAULT_PATH
         self.url = comic_base_url
         self.download_dir = download_dir
         
-    def get_comic(self,comic_name,chapter):
+    def get_comic(self,comic_name,chapter,start_page = 1):
         '''
         想定しているサイトの構成
         URL:baseurl/'話数'/'ページNo'
+
+        戻り値：最終読み込みページ（１ページも読み込めなかった場合はstart_page - 1)
         '''
-        page_count = 0
+        readed_page = start_page - 1
 
         chapter_url = self.url + comic_name + '/' + str(chapter) + "/"
 
-        pages = range(1,MAX_PAGE + 1)
+        pages = range(start_page,MAX_PAGE + 1)
 
         for page in pages:
             
@@ -36,9 +34,9 @@ class WebComicDownloader:
                 break;
             
             self.save_page(page_file,comic_name,chapter,page)
-            page_count += 1
+            readed_page += 1
 
-        return page_count
+        return readed_page
     
     def get_page(self,url):
         result = None
@@ -67,8 +65,8 @@ class WebComicDownloader:
         mkfile.close()
 
 if __name__ == '__main__':
-    url = 'http://hogehoge.hogehoge/'
+    url = 'http://hogehoge/manga/'
     obj = WebComicDownloader(url, '/Users/momiji/tmp/')
-    for i in range(2,6):
-        obj.get_comic('tree',i)
+    for i in range(1,5):
+        obj.get_comic('comic_name',i)
 

@@ -4,7 +4,7 @@ class ComicArchiver:
 
     def __init__(self,file_dir):
         self.file_dir = file_dir
-    def Archive(self,comic_name,start_chapter = 1,chapter_count = 1,delete_flg = False):
+    def archive(self,comic_name,start_chapter = 1,chapter_count = 1,delete_flg = False):
                
         self.start = start_chapter
         self.count = chapter_count
@@ -59,4 +59,4 @@ class ComicArchiver:
 
 if __name__ == '__main__':
     hoge = ComicArchiver('/Users/momiji/tmp/')
-    hoge.Archive('tree',51)
+    hoge.archive('tree',729)
